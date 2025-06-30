@@ -5,12 +5,12 @@ public:
         int n = nums.size();
         int start = 0, maxLen = 0;
 
-        for (int end = 0; end < n; ++end) {
-            while (nums[end] - nums[start] > 1) {
+        for (int i = 0; i < n; ++i) {
+            while (nums[i] - nums[start] > 1) {
                 start++;
             }
-            if (nums[end] - nums[start] == 1) {
-                maxLen = max(maxLen, end - start + 1);
+            if (nums[i] - nums[start] == 1) {
+                maxLen = max(maxLen, i - start + 1);
             }
         }
 

@@ -1,26 +1,25 @@
 class Solution {
 public:
-    void make_combinations(vector<int>& candidates, int target, int idx,
-                           vector<int> check_comb, int total,
-                           vector<vector<int>>& res) {
-        if (total == target) {
-            res.push_back(check_comb);
+    void backtrack(vector<int>& candidates, int target, int idx,
+                   vector<int>& current, vector<vector<int>>& result) {
+        if (target == 0) {
+            result.push_back(current);
             return;
         }
 
-        if (total > target || idx >= candidates.size())
-            return;
+        if (target < 0 || idx == candidates.size()) return;
 
-        check_comb.push_back(candidates[idx]);
-        make_combinations(candidates, target, idx, check_comb,
-                          total + candidates[idx], res);
-        check_comb.pop_back();
-        make_combinations(candidates, target, idx + 1, check_comb, total, res);
+        current.push_back(candidates[idx]);
+        backtrack(candidates, target - candidates[idx], idx, current, result);
+        current.pop_back();
+
+        backtrack(candidates, target, idx + 1, current, result);
     }
+
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> res;
-        vector<int> check_comb;
-        make_combinations(candidates, target, 0, check_comb, 0, res);
-        return res;
+        vector<vector<int>> result;
+        vector<int> current;
+        backtrack(candidates, target, 0, current, result);
+        return result;
     }
 };

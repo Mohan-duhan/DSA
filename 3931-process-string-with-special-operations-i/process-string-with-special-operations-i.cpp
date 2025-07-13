@@ -1,26 +1,22 @@
 class Solution {
 public:
     string processStr(string str) {
-        int n = str.length();
-        string result = "";
+        vector<char> result;
 
-        for (int i = 0; i < n; i++) {
-            char ch = str[i];
-
+        for (char ch : str) {
             if (islower(ch)) {
-                result += ch;
+                result.push_back(ch);
             } else if (ch == '*') {
                 if (!result.empty())
                     result.pop_back();
             } else if (ch == '#') {
-                string temp = result;
-                for (int i = 0; i < temp.length(); i++) {
-                    result += temp[i];
-                }
+                vector<char> temp = result;
+                result.insert(result.end(), temp.begin(), temp.end());
             } else if (ch == '%') {
                 reverse(result.begin(), result.end());
             }
         }
-        return result;
+
+        return string(result.begin(), result.end());
     }
 };

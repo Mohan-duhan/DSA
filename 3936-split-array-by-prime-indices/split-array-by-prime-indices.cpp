@@ -14,10 +14,8 @@ public:
         vector<int> A;
         vector<int> B;
 
-        if (nums.size() >= 1) B.push_back(nums[0]);
-        if (nums.size() >= 2) B.push_back(nums[1]);
-
-        for (int i = 2; i < nums.size(); i++) {
+        int n = nums.size();
+        for (int i = 0; i < n; i++) {
             if (isPrime(i)) {
                 A.push_back(nums[i]);
             } else {
@@ -27,9 +25,12 @@ public:
 
         long long sum_A = 0, sum_B = 0;
 
-        for (int num : A) sum_A += num;
-        for (int num : B) sum_B += num;
+        for (int x : A)
+            sum_A += x;
+        for (int x : B)
+            sum_B += x;
 
-        return abs(sum_A - sum_B);
+        long long diff = abs(sum_A - sum_B);
+        return min(diff, 100000000000000LL);
     }
 };

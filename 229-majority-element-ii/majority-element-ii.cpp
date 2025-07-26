@@ -12,7 +12,7 @@ public:
         }
 
         for (auto& it : arr) {
-            if(it.second>k){
+            if (it.second > k) {
                 res.push_back(it.first);
             }
         }

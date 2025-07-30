@@ -8,6 +8,11 @@ public:
                 return 0;
             }
         }
+
+        if (curr_or == max_or) {
+            return 1 << (nums.size() - idx);
+        }
+
         return solve(nums, idx + 1, curr_or | nums[idx], max_or) +
                solve(nums, idx + 1, curr_or, max_or);
     }

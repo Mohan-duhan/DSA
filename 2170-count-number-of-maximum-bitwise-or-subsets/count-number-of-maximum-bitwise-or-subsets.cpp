@@ -1,14 +1,15 @@
 class Solution {
 public:
-    int count = 0;
-    void solve(vector<int> nums, int idx, int curr_or, int max_or) {
+    int solve(vector<int> nums, int idx, int curr_or, int max_or) {
         if (idx == nums.size()) {
             if (curr_or == max_or)
-                count++;
-            return;
+                return 1;
+            else {
+                return 0;
+            }
         }
-        solve(nums, idx + 1, curr_or | nums[idx], max_or); // take
-        solve(nums, idx + 1, curr_or, max_or);             // not take
+        return solve(nums, idx + 1, curr_or | nums[idx], max_or) +
+               solve(nums, idx + 1, curr_or, max_or);
     }
     int countMaxOrSubsets(vector<int>& nums) {
         int n = nums.size();
@@ -17,7 +18,6 @@ public:
             max_or |= nums[i];
         }
 
-       solve(nums, 0, 0, max_or);
-       return count;
+        return solve(nums, 0, 0, max_or);
     }
 };

@@ -21,9 +21,10 @@ public:
                 store.push_back(k);
             }
         }
-        sort(store.begin(), store.end());
-
-        long long  cost = 0;
+        // sort(store.begin(), store.end());
+        nth_element(begin(store), begin(store) + store.size() / 2, end(store));
+        
+        long long cost = 0;
         for (int i = 0; i < store.size() / 2; i++) {
             cost += min((long long)2 * minEl, (long long)store[i]);
         }

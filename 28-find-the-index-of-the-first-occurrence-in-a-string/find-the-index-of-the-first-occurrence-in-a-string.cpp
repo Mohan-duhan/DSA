@@ -5,7 +5,11 @@ public:
         int k = s2.size();
 
         for (int i = 0; i <= n - k; i++) {
-            if (s1.substr(i, k) == s2)
+            int j = 0;
+            while (j < k && s1[i + j] == s2[j]) {
+                j++;
+            }
+            if (j == k)
                 return i;
         }
         return -1;

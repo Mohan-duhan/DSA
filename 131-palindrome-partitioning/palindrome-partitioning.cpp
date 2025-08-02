@@ -1,12 +1,15 @@
 class Solution {
 public:
-    bool isPalindrome(string str) {
-        string r_str = str;
-        reverse(r_str.begin(), r_str.end());
-        return r_str == str;
+    bool isPalindrome(const string& str) {
+        int l = 0, r = str.size() - 1;
+        while (l < r) {
+            if (str[l++] != str[r--]) return false;
+        }
+        return true;
     }
 
-    void solve(string s, int idx, vector<string> curr, vector<vector<string>>& res) {
+    void solve(string& s, int idx, vector<string>& curr,
+               vector<vector<string>>& res) {
         if (idx == s.length()) {
             res.push_back(curr);
             return;

@@ -7,11 +7,11 @@ public:
         }
         if (dp[i][j] != -1) {
             return dp[i][j];
-        } else if (i == m - 1) {
+        } else if (i == m - 1) { // no down option , only goes right
             return dp[i][j] = grid[i][j] + solve(grid, i, j + 1, m, n, dp);
-        } else if (j == n - 1) {
+        } else if (j == n - 1) { // no right option , only goes down
             return dp[i][j] = grid[i][j] + solve(grid, i + 1, j, m, n, dp);
-        } else {
+        } else { // find the best path for min sum
             return dp[i][j] = grid[i][j] + min(solve(grid, i + 1, j, m, n, dp),
                                                solve(grid, i, j + 1, m, n, dp));
         }
@@ -20,6 +20,6 @@ public:
         int m = grid.size();
         int n = grid[0].size();
         vector<vector<int>> dp(m + 1, vector<int>(n + 1, -1));
-        return solve(grid, 0, 0, m, n,dp);
+        return solve(grid, 0, 0, m, n, dp);
     }
 };

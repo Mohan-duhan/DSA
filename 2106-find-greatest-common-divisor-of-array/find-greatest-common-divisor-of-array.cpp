@@ -1,5 +1,20 @@
 class Solution {
 public:
+    int gcd(int a, int b) {
+        if (a == 0)
+            return b;
+        if (b == 0)
+            return a;
+
+        if (a == b)
+            return a;
+
+        if (a > b) {
+            return gcd(a - b, b);
+        } else {
+            return gcd(a, b - a);
+        }
+    }
     int findGCD(vector<int>& nums) {
         int n = nums.size();
         int a = INT_MIN;
@@ -11,15 +26,6 @@ public:
             b = min(b, nums[i]);
         }
 
-        int res = min(a, b);
-
-        while (res > 0) {
-            if (a % res == 0 && b % res == 0) {
-                break;
-            } else {
-                res--;
-            }
-        }
-        return res;
+        return gcd(a, b);
     }
 };

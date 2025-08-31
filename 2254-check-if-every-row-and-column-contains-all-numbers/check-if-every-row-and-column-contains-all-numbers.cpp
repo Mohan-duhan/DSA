@@ -4,6 +4,7 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
 
+        //validate rows
         for (int i = 0; i < n; i++) {
             set<int> st;
             for (int j = 0; j < m; j++) {
@@ -14,6 +15,7 @@ public:
             }
         }
 
+        //validate columns
         for (int j = 0; j < n; j++) {
             set<int> st;
             for (int i = 0; i < m; i++) {

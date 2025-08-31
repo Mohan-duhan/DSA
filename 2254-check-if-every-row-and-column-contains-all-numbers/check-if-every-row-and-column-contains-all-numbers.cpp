@@ -2,27 +2,19 @@ class Solution {
 public:
     bool checkValid(vector<vector<int>>& matrix) {
         int n = matrix.size();
-        int m = matrix[0].size();
 
-        //validate rows
-        for (int i = 0; i < n; i++) {
-            set<int> st;
-            for (int j = 0; j < m; j++) {
-                if (st.find(matrix[i][j]) != st.end()) {
-                    return false;
-                }
-                st.insert(matrix[i][j]);
-            }
-        }
+        for(int i=0; i<n; i++){
+            vector<bool> row(n + 1, 0);
+            vector<bool> col(n + 1, 0);
 
-        //validate columns
-        for (int j = 0; j < n; j++) {
-            set<int> st;
-            for (int i = 0; i < m; i++) {
-                if (st.find(matrix[i][j]) != st.end()) {
-                    return false;
-                }
-                st.insert(matrix[i][j]);
+            for(int j=0; j<n; j++){
+                int r = matrix[i][j];
+                int c = matrix[j][i];
+
+                if(row[r] || col[c]) return false;
+                
+                row[r] = true;
+                col[c] = true;
             }
         }
 

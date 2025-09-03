@@ -23,8 +23,8 @@ public:
             prev = slow;
             slow = slow->next;
         }
+
         prev->next = slow->next;
-        delete slow;
 
         return head;
     }

@@ -11,11 +11,9 @@ public:
 
         for (int k = 0; k < n; k++) {
             if (k % 2 == 0) {
-                nums[k] = arr[i];
-                i--;
+                nums[k] = arr[i--];
             } else {
-                nums[k] = arr[j];
-                j--;
+                nums[k] = arr[j--];
             }
         }
     }

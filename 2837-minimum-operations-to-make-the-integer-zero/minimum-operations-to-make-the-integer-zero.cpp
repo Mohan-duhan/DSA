@@ -1,13 +1,13 @@
 class Solution {
 public:
     int makeTheIntegerZero(int num1, int num2) {
-        for (int k = 1; k <= 60; k++) {
-            long long x = num1 - 1LL * num2 * k;
-            if (x < k) {
+        for (int i = 1; i <= 60; i++) {
+            long long  res = num1 - 1LL * num2 * i;
+            if (res < i) {
                 return -1;
             }
-            if (k >= __builtin_popcountll(x)) {
-                return k;
+            if (i >= __builtin_popcountll(res)) {
+                return i;
             }
         }
         return -1;

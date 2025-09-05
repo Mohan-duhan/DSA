@@ -10,6 +10,17 @@
  */
 class Solution {
 public:
+    ListNode* middle(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow; 
+    }
+
     ListNode* merge(ListNode* list1, ListNode* list2) {
         ListNode* dummy = new ListNode(0);
         ListNode* curr = dummy;
@@ -32,22 +43,16 @@ public:
     }
 
     ListNode* sortList(ListNode* head) {
-        if (!head || !head->next) return head;
+        if (!head || !head->next)
+            return head;
 
-        ListNode* slow = head;
-        ListNode* fast = head;
-
-        while (fast->next && fast->next->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-
-        ListNode* mid = slow->next;
-        slow->next = nullptr;
+        ListNode* mid = middle(head);
+        ListNode* right = mid->next;
+        mid->next = nullptr; 
 
         ListNode* left = sortList(head);
-        ListNode* right = sortList(mid);
-
+        right = sortList(right);
+        
         return merge(left, right);
     }
 };

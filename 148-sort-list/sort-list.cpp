@@ -18,7 +18,7 @@ public:
             slow = slow->next;
             fast = fast->next->next;
         }
-        return slow; 
+        return slow;
     }
 
     ListNode* merge(ListNode* list1, ListNode* list2) {
@@ -35,8 +35,11 @@ public:
             }
             curr = curr->next;
         }
-        curr->next = (list1 ? list1 : list2);
-
+        if (list1 != nullptr) {
+            curr->next = list1;
+        } else {
+            curr->next = list2;
+        }
         ListNode* head = dummy->next;
         delete dummy;
         return head;
@@ -48,11 +51,11 @@ public:
 
         ListNode* mid = middle(head);
         ListNode* right = mid->next;
-        mid->next = nullptr; 
+        mid->next = nullptr;
 
         ListNode* left = sortList(head);
         right = sortList(right);
-        
+
         return merge(left, right);
     }
 };

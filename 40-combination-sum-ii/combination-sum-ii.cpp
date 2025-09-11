@@ -1,29 +1,47 @@
 class Solution {
 public:
-    void backtrack(vector<int>& candidates, int target, int idx,
-                   vector<int>& check_comb, vector<vector<int>>& res) {
+    void helper(unordered_map<int, int>::iterator it,
+                unordered_map<int, int>::iterator ed, vector<int>& track,
+                int target, vector<vector<int>>& ans) {
         if (target == 0) {
-            res.push_back(check_comb);
+            ans.push_back(track);
             return;
         }
+        
+        if (it == ed)
+            return;
 
-        for (int i = idx; i < candidates.size(); i++) {
-            if (i > idx && candidates[i] == candidates[i - 1])
-                continue;
-            if (candidates[i] > target)
+        // not take
+        helper(next(it), ed, track, target, ans);
+
+        // take i times
+        int i;
+        for (i = 0; i < it->second; i++) {
+            track.push_back(it->first);
+            target -= it->first;
+            if (target >= 0)
+                helper(next(it), ed, track, target, ans);
+
+            else {
+                i++;
                 break;
-
-            check_comb.push_back(candidates[i]);
-            backtrack(candidates, target - candidates[i], i + 1, check_comb, res);
-            check_comb.pop_back();
+            }
         }
+
+        while (i--)
+            track.pop_back();
     }
 
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end());  
-        vector<vector<int>> res;
-        vector<int> check_comb;
-        backtrack(candidates, target, 0, check_comb, res);
-        return res;
+    vector<vector<int>> combinationSum2(vector<int>& can, int target) {
+        // Note the frequency of the candidates
+        unordered_map<int, int> mp;
+        for (int x : can)
+            mp[x]++;
+
+        vector<vector<int>> ans;
+        vector<int> track;
+
+        helper(mp.begin(), mp.end(), track, target, ans);
+        return ans;
     }
 };

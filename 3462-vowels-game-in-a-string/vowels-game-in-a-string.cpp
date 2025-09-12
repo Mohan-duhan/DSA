@@ -1,11 +1,10 @@
 class Solution {
 public:
     bool doesAliceWin(string s) {
-     unordered_set<char> vowels = {'a','e','i','o','u'};
-        for(int i=0;i<s.size();i++)
-        {
-            if(vowels.count(s[i]))
-            return true;
+        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+        for (char ch : s) {
+            if (vowels.count(ch))
+                return true;
         }
         return false;
     }

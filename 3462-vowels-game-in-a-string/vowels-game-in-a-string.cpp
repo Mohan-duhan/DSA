@@ -1,10 +1,10 @@
 class Solution {
 public:
     bool doesAliceWin(string s) {
-    string str="aeiou";
+     unordered_set<char> vowels = {'a','e','i','o','u'};
         for(int i=0;i<s.size();i++)
         {
-            if(str.find(s[i])!=string::npos)
+            if(vowels.count(s[i]))
             return true;
         }
         return false;

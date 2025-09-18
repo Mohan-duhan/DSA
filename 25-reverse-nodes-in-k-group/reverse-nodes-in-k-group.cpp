@@ -13,7 +13,7 @@ public:
             return head;
 
         int i = 0;
-        while (i + k <= arr.size()) {  // only reverse full groups
+        while (i + k <= arr.size()) {  
             reverse(arr.begin() + i, arr.begin() + i + k);
             i += k;
         }

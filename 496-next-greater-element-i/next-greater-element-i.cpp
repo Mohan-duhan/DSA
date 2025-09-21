@@ -5,6 +5,8 @@ public:
         int m = nums.size();
 
         vector<int> res(10001, -1);
+        int max_val = 0;
+
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
                 if (arr[j] > arr[i]) {
@@ -13,9 +15,10 @@ public:
                 }
             }
         }
-
         vector<int> ans;
-        for (int k : nums) {
+
+        for (int i = 0; i < m; i++) {
+            int k = nums[i];
             ans.push_back(res[k]);
         }
         return ans;

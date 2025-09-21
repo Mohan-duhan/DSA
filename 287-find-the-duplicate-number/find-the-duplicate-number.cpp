@@ -2,7 +2,6 @@ class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
         // we are using floyd's cycle detection algorithm.
-
         int slow = nums[0];
         int fast = nums[0];
 

@@ -1,23 +1,20 @@
 class Solution {
 public:
     vector<int> findLonely(vector<int>& nums) {
-        int max_val = 0;
-        for (int num : nums) {
-            max_val = max(max_val, num);
-        }
+        int n = nums.size();
 
-        vector<int> freq(max_val + 1, 0);
+        unordered_map<int, int> mp;
 
         for (int num : nums) {
-            freq[num]++;
+            mp[num]++;
         }
 
         vector<int> ans;
-        for (int num : nums) {
-            if (freq[num] == 1 &&
-                (num == 0 || freq[num - 1] == 0) &&
-                (num == max_val || freq[num + 1] == 0)) {
-                ans.push_back(num);
+
+        for (auto& it : mp) {
+            if (it.second == 1 and mp.find(it.first + 1) == mp.end() and
+                mp.find(it.first - 1) == mp.end()) {
+                ans.push_back(it.first);
             }
         }
         return ans;

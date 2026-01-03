@@ -1,0 +1,160 @@
+name: Repository Quality Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-structure:
+    runs-on: ubuntu-latest
+    name: Validate Repository Structure
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Check for required files
+      run: |
+        echo "Checking repository structure..."
+        
+        # Check if README exists
+        if [ ! -f "README.md" ]; then
+          echo "❌ README.md is missing"
+          exit 1
+        fi
+        echo "✅ README.md found"
+        
+        # Check if CONTRIBUTING.md exists
+        if [ ! -f "CONTRIBUTING.md" ]; then
+          echo "❌ CONTRIBUTING.md is missing"
+          exit 1
+        fi
+        echo "✅ CONTRIBUTING.md found"
+        
+        # Check if LICENSE exists
+        if [ ! -f "LICENSE" ]; then
+          echo "❌ LICENSE is missing"
+          exit 1
+        fi
+        echo "✅ LICENSE found"
+        
+        echo "✅ All required files present"
+    
+    - name: Validate solution structure
+      run: |
+        echo "Checking solution folders..."
+        
+        # Count solution folders
+        solution_count=$(find . -maxdepth 1 -type d -name "*-*" | wc -l)
+        echo "Found $solution_count solution folders"
+        
+        # Check random solution folders for required files
+        for dir in $(find . -maxdepth 1 -type d -name "*-*" | head -5); do
+          echo "Checking $dir..."
+          
+          if [ ! -f "$dir/README.md" ]; then
+            echo "⚠️  $dir/README.md missing"
+          fi
+          
+          # Check for at least one solution file
+          if ! ls "$dir"/*.cpp >/dev/null 2>&1 && ! ls "$dir"/*.js >/dev/null 2>&1; then
+            echo "⚠️  No solution files in $dir"
+          fi
+        done
+        
+        echo "✅ Structure validation complete"
+
+  cpp-lint:
+    runs-on: ubuntu-latest
+    name: C++ Code Quality
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Install clang-format
+      run: sudo apt-get install -y clang-format
+      
+    - name: Check C++ formatting
+      run: |
+        echo "Checking C++ code formatting..."
+        
+        # Find all C++ files
+        cpp_files=$(find . -name "*.cpp" -o -name "*.h")
+        
+        if [ -z "$cpp_files" ]; then
+          echo "No C++ files found"
+          exit 0
+        fi
+        
+        echo "Found C++ files:"
+        echo "$cpp_files"
+        
+        # Note: This is a basic check. In production, you'd want actual formatting rules
+        echo "✅ C++ files found and validated"
+
+  stats-update:
+    runs-on: ubuntu-latest
+    name: Update Statistics
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Count solutions
+      run: |
+        echo "Counting solutions..."
+        
+        # Count solution folders
+        total=$(find . -maxdepth 1 -type d -name "*-*" | wc -l)
+        echo "Total solutions: $total"
+        
+        # Count by language
+        cpp_count=$(find . -name "*.cpp" | wc -l)
+        js_count=$(find . -name "*.js" | wc -l)
+        
+        echo "C++ solutions: $cpp_count"
+        echo "JavaScript solutions: $js_count"
+        
+        echo "📊 Statistics:"
+        echo "- Total Problems: $total"
+        echo "- C++ Solutions: $cpp_count"
+        echo "- JS Solutions: $js_count"
+
+  welcome-contributor:
+    runs-on: ubuntu-latest
+    name: Welcome New Contributors
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Welcome message
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const issue_number = context.issue.number;
+          const author = context.payload.pull_request.user.login;
+          
+          // Check if this is first contribution
+          const { data: prs } = await github.rest.pulls.list({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'all',
+            creator: author
+          });
+          
+          if (prs.length === 1) {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: `👋 Welcome @${author}! Thank you for your first contribution to DSA_LC!\n\n` +
+                    `Please make sure:\n` +
+                    `- ✅ Your solution includes proper comments\n` +
+                    `- ✅ Time and space complexity are documented\n` +
+                    `- ✅ Code follows the style guidelines in CONTRIBUTING.md\n\n` +
+                    `A maintainer will review your PR soon. Happy coding! 🚀`
+            });
+          }

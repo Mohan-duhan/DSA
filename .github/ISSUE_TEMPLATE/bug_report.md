@@ -1,32 +1,54 @@
 ---
 name: Bug Report
-about: Report a bug in a solution
-title: '[BUG] '
+about: Report an error in a solution
+title: '[BUG] Problem Name - Brief Description'
 labels: bug
 assignees: ''
 ---
 
-## Bug Description
-A clear description of what the bug is.
+## 🐛 Bug Description
+A clear and concise description of what the bug is.
 
-## Problem
-Which problem does this bug affect?
-- Problem Name:
-- Problem Link:
+## 📍 Problem Details
+- **Problem Number**: #
+- **Problem Name**: 
+- **Problem Link**: https://leetcode.com/problems/...
+- **File Path**: `problem-folder/solution.cpp`
 
-## Expected Behavior
-What should happen?
+## 🔍 Current Behavior
+What is currently happening?
 
-## Actual Behavior
-What actually happens?
+## ✅ Expected Behavior
+What should happen instead?
 
-## Steps to Reproduce
+## 📝 Steps to Reproduce
 1. Go to '...'
-2. Run '...'
+2. Run with input '...'
 3. See error
 
-## Solution File
-Which file has the bug?
+## 💻 Test Case
+```cpp
+Input: 
+Output: 
+Expected: 
+```
 
-## Additional Context
+## 🖼️ Screenshots
+If applicable, add screenshots to help explain your problem.
+
+## 🔧 Proposed Solution
+If you have an idea of how to fix this, please describe it here.
+
+## 📱 Environment
+- **Language**: C++ / JavaScript
+- **Compiler/Runtime**: 
+- **LeetCode Submission**: Pass/Fail
+
+## ✔️ Checklist
+- [ ] I have checked that this issue hasn't been reported before
+- [ ] I have verified the bug with the LeetCode test cases
+- [ ] I have included a minimal reproducible example
+- [ ] I have checked the NOTES.md file for this problem
+
+## 📎 Additional Context
 Add any other context about the problem here.
